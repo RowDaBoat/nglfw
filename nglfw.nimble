@@ -17,9 +17,7 @@ binDir = "bin"
 requires "nim >= 1.0.2"
 
 before install:
-  exec "echo @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
   exec "git submodule update --init --recursive"
-  exec "echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
 
 #_________________________________________________
 # Tasks: Internal
