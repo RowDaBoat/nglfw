@@ -175,6 +175,34 @@ const
   JOYSTICK_16* = 15
   JOYSTICK_LAST* = JOYSTICK_16
 
+  GAMEPAD_BUTTON_A* = 0
+  GAMEPAD_BUTTON_B* = 1
+  GAMEPAD_BUTTON_X* = 2
+  GAMEPAD_BUTTON_Y* = 3
+  GAMEPAD_BUTTON_LEFT_BUMPER* = 4
+  GAMEPAD_BUTTON_RIGHT_BUMPER* = 5
+  GAMEPAD_BUTTON_BACK* = 6
+  GAMEPAD_BUTTON_START* = 7
+  GAMEPAD_BUTTON_GUIDE* = 8
+  GAMEPAD_BUTTON_LEFT_THUMB* = 9
+  GAMEPAD_BUTTON_RIGHT_THUMB* = 10
+  GAMEPAD_BUTTON_DPAD_UP* = 11
+  GAMEPAD_BUTTON_DPAD_RIGHT* = 12
+  GAMEPAD_BUTTON_DPAD_DOWN* = 13
+  GAMEPAD_BUTTON_DPAD_LEFT* = 14
+  GAMEPAD_BUTTON_LAST* = GAMEPAD_BUTTON_DPAD_LEFT
+  GAMEPAD_BUTTON_CROSS* = GAMEPAD_BUTTON_A
+  GAMEPAD_BUTTON_CIRCLE* = GAMEPAD_BUTTON_B
+  GAMEPAD_BUTTON_SQUARE* = GAMEPAD_BUTTON_X
+  GAMEPAD_BUTTON_TRIANGLE* = GAMEPAD_BUTTON_Y
+  GAMEPAD_AXIS_LEFT_X* = 0
+  GAMEPAD_AXIS_LEFT_Y* = 1
+  GAMEPAD_AXIS_RIGHT_X* = 2
+  GAMEPAD_AXIS_RIGHT_Y* = 3
+  GAMEPAD_AXIS_LEFT_TRIGGER* = 4
+  GAMEPAD_AXIS_RIGHT_TRIGGER* = 5
+  GAMEPAD_AXIS_LAST* = GAMEPAD_AXIS_RIGHT_TRIGGER
+
   NOT_INITIALIZED* = 0x00010001
   NO_CURRENT_CONTEXT* = 0x00010002
   INVALID_ENUM* = 0x00010003
@@ -262,6 +290,8 @@ const
   CONNECTED* = 0x00040001
   DISCONNECTED* = 0x00040002
 
+  JOYSTICK_HAT_BUTTONS* = 0x00050001
+
   DONT_CARE* = -1
 
 # GLFW API types
@@ -311,7 +341,9 @@ type
     height*: cint
     pixels*: cstring
 
-  # Missing GLFWgamepadstate
+  Gamepadstate* {.pure, final.} = object
+    buttons*: array[15, uint8]
+    axes*: array[6, cfloat]
 
 # Methods
 proc init*() :bool {.cdecl, importc: "glfwInit".}
@@ -341,8 +373,16 @@ proc setErrorCallback*(cbfun: ErrorFun): ErrorFun {.cdecl, importc: "glfwSetErro
 proc joystickPresent*(joy: cint): cint {.cdecl, importc: "glfwJoystickPresent".}
 proc getJoystickAxes*(joy: cint, count: ptr cint): ptr cfloat {.cdecl, importc: "glfwGetJoystickAxes".}
 proc getJoystickButtons*(joy: cint, count: ptr cint): ptr uint8 {.cdecl, importc: "glfwGetJoystickButtons".}
+proc getJoystickHats*(jid: cint, count: ptr cint): ptr uint8 {.cdecl, importc: "glfwGetJoystickHats" }
 proc getJoystickName*(joy: cint): cstring {.cdecl, importc: "glfwGetJoystickName".}
+proc getJoystickGUID*(jid: cint): ptr int8 {.cdecl, importc: "glfwGetJoystickGUID" }
+proc setJoystickUserPointer*(jid: cint, pointer: pointer) {.cdecl, importc: "glfwSetJoystickUserPointer" }
+proc getJoystickUserPointer*(jid: cint): pointer {.cdecl, importc: "glfwGetJoystickUserPointer" }
+proc joystickIsGamepad*(jid: cint): cint {.cdecl, importc: "glfwJoystickIsGamepad" }
 proc setJoystickCallback*(cbfun: JoystickFun): JoystickFun {.cdecl, importc: "glfwSetJoystickCallback".}
+proc updateGamepadMappings*(string: string): cint {.cdecl, importc: "glfwUpdateGamepadMappings" }
+proc getGamepadName*(jid: cint): cstring {.cdecl, importc: "glfwGetGamepadName" }
+proc getGamepadState*(jid: cint, state: ptr GamepadState): cint {.cdecl, importc: "glfwGetGamepadState" }
 # monitor functions
 proc getMonitors*(count: ptr cint): ptr Monitor {.cdecl, importc: "glfwGetMonitors".}
 proc getPrimaryMonitor*(): Monitor {.cdecl, importc: "glfwGetPrimaryMonitor".}

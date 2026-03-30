@@ -4,7 +4,7 @@
 
 # Package Info
 packageName = "nglfw"
-version     = "3.3.8.3"  # First three are kept in sync with glfw version
+version     = "3.4.0.0"  # First three are kept in sync with glfw version
 author      = "Ivan Mar (sOkam!)"
 description = "Nim GLFW3"
 license     = "MIT"
@@ -28,4 +28,3 @@ task push, "Internal:  Pushes the git repository, and orders to create a new git
   requires "https://github.com/beef331/graffiti.git"
   exec "git push"  # Requires local auth
   exec &"graffiti ./{packageName}.nimble"
-

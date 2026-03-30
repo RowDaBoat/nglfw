@@ -16,34 +16,6 @@
 #define GLFW_MOD_NUM_LOCK        0x0020
 // #define GLFW_MOUSE_BUTTON_1         0
 
-// #define GLFW_JOYSTICK_LAST          GLFW_JOYSTICK_16
-#define GLFW_GAMEPAD_BUTTON_A               0
-#define GLFW_GAMEPAD_BUTTON_B               1
-#define GLFW_GAMEPAD_BUTTON_X               2
-#define GLFW_GAMEPAD_BUTTON_Y               3
-#define GLFW_GAMEPAD_BUTTON_LEFT_BUMPER     4
-#define GLFW_GAMEPAD_BUTTON_RIGHT_BUMPER    5
-#define GLFW_GAMEPAD_BUTTON_BACK            6
-#define GLFW_GAMEPAD_BUTTON_START           7
-#define GLFW_GAMEPAD_BUTTON_GUIDE           8
-#define GLFW_GAMEPAD_BUTTON_LEFT_THUMB      9
-#define GLFW_GAMEPAD_BUTTON_RIGHT_THUMB     10
-#define GLFW_GAMEPAD_BUTTON_DPAD_UP         11
-#define GLFW_GAMEPAD_BUTTON_DPAD_RIGHT      12
-#define GLFW_GAMEPAD_BUTTON_DPAD_DOWN       13
-#define GLFW_GAMEPAD_BUTTON_DPAD_LEFT       14
-#define GLFW_GAMEPAD_BUTTON_LAST            GLFW_GAMEPAD_BUTTON_DPAD_LEFT
-#define GLFW_GAMEPAD_BUTTON_CROSS       GLFW_GAMEPAD_BUTTON_A
-#define GLFW_GAMEPAD_BUTTON_CIRCLE      GLFW_GAMEPAD_BUTTON_B
-#define GLFW_GAMEPAD_BUTTON_SQUARE      GLFW_GAMEPAD_BUTTON_X
-#define GLFW_GAMEPAD_BUTTON_TRIANGLE    GLFW_GAMEPAD_BUTTON_Y
-#define GLFW_GAMEPAD_AXIS_LEFT_X        0
-#define GLFW_GAMEPAD_AXIS_LEFT_Y        1
-#define GLFW_GAMEPAD_AXIS_RIGHT_X       2
-#define GLFW_GAMEPAD_AXIS_RIGHT_Y       3
-#define GLFW_GAMEPAD_AXIS_LEFT_TRIGGER  4
-#define GLFW_GAMEPAD_AXIS_RIGHT_TRIGGER 5
-#define GLFW_GAMEPAD_AXIS_LAST          GLFW_GAMEPAD_AXIS_RIGHT_TRIGGER
 #define GLFW_NO_ERROR               0
 // #define GLFW_NOT_INITIALIZED        0x00010001
 
@@ -93,7 +65,6 @@
 // #define GLFW_HAND_CURSOR            GLFW_POINTING_HAND_CURSOR
 
 // #define GLFW_DISCONNECTED           0x00040002
-#define GLFW_JOYSTICK_HAT_BUTTONS   0x00050001
 #define GLFW_COCOA_CHDIR_RESOURCES  0x00051001
 #define GLFW_COCOA_MENUBAR          0x00051002
 // #define GLFW_DONT_CARE              -1
@@ -101,10 +72,6 @@ typedef void (*GLFWglproc)(void);
 typedef void (*GLFWvkproc)(void);
 typedef void (* GLFWwindowmaximizefun)(GLFWwindow*,int);
 typedef void (* GLFWwindowcontentscalefun)(GLFWwindow*,float,float);
-typedef struct GLFWgamepadstate {
-  unsigned char buttons[15];
-  float axes[6];
-} GLFWgamepadstate;
 GLFWAPI void glfwInitHint(int hint, int value);
 GLFWAPI int glfwGetError(const char** description);
 GLFWAPI void glfwGetMonitorWorkarea(GLFWmonitor* monitor, int* xpos, int* ypos, int* width, int* height);
@@ -121,11 +88,3 @@ GLFWAPI GLFWwindowcontentscalefun glfwSetWindowContentScaleCallback(GLFWwindow* 
 GLFWAPI int glfwRawMouseMotionSupported(void);
 GLFWAPI const char* glfwGetKeyName(int key, int scancode);
 GLFWAPI int glfwGetKeyScancode(int key);
-GLFWAPI const unsigned char* glfwGetJoystickHats(int jid, int* count);
-GLFWAPI const char* glfwGetJoystickGUID(int jid);
-GLFWAPI void glfwSetJoystickUserPointer(int jid, void* pointer);
-GLFWAPI void* glfwGetJoystickUserPointer(int jid);
-GLFWAPI int glfwJoystickIsGamepad(int jid);
-GLFWAPI int glfwUpdateGamepadMappings(const char* string);
-GLFWAPI const char* glfwGetGamepadName(int jid);
-GLFWAPI int glfwGetGamepadState(int jid, GLFWgamepadstate* state);
