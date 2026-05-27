@@ -472,7 +472,10 @@ when defined(windows):
 elif defined(macosx):
   proc getCocoaWindow *(window :Window) :clong {.cdecl, importc: "glfwGetCocoaWindow".}
   when defined(wgpu):
-    proc getMetalLayer *(window :Window) :pointer {.cdecl, importc: "macGetMetalLayer", header: "metal_glue.h".}
+    when defined(cpp):
+      proc getMetalLayer *(window :Window) :pointer {.cdecl, importc: "macGetMetalLayer".}
+    else:
+      proc getMetalLayer *(window :Window) :pointer {.cdecl, importc: "macGetMetalLayer", header: "metal_glue.h".}
 #___________________
 elif defined(linux) and defined(wayland):
   proc getWaylandDisplay *() :pointer {.cdecl, importc: "glfwGetWaylandDisplay".}
@@ -494,4 +497,3 @@ proc setImePos *(window :Window; xpos :cint; ypos :cint) :void {.cdecl, importc:
 proc getIme    *(window :Window; location :ptr[cint]; string :cstring) :void {.cdecl, importc: "glfwGetIme".}
 proc closeIme  *(window :Window) :void {.cdecl, importc: "glfwCloseIme".}
 ]##
-
